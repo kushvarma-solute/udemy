@@ -1,0 +1,27 @@
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/nav.ejs') %>
+<!-- this page is load when we click on the product -->
+  <main>
+    <% if(prods.length > 0) {%>
+        <% for (let product of prods) {%>
+
+        <div class="card" style="width: 18rem;">
+          <img src="<%= product.imageurl %>" class="card-img-top" alt="<%= product.title %>">
+        
+          <div class="card-body">
+            <h2 class="card-title"><%= product.title %></h2>
+            <h3 class="card-text">Rs.<%= product.price %></h3>
+            <p class="card-text"><%= product.description %></p>
+            <form action="/cart" method="POST">
+             <a href="/products/<%= product.id %>" class="btn btn-outline-secondary">Details</a>
+             <%- include('../includes/add-to-cart.ejs',{product : product}) %> 
+            </form>
+          </div>
+        </div>
+        <%}%>
+    <%} else {%>
+    <h1>All products</h1>
+    <%}%>
+  </main>
+
+<%- include('../includes/end.ejs') %>
