@@ -1,0 +1,11 @@
+var url = require('url');
+var adr = 'http://localhost:8080/default.htm?year=2017&month=february';
+var q = url.parse(adr, true);
+console.log(q.host);
+console.log(q.hostname);
+console.log(q.hash);
+console.log(q.href);
+console.log(q.pathname);
+console.log(q.port);
+console.log(q.protocol);
+console.log(q.search);
