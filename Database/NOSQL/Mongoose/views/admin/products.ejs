@@ -1,0 +1,58 @@
+<%- include('../includes/head.ejs') %>
+ <%- include('../includes/nav.ejs') %>
+
+
+  <main>
+    <% if(prods.length > 0) {%>
+        <% for (let product of prods) {%>
+
+        <div class="card" style="width: 18rem;">
+        
+          <div class="card-body">
+            <img src="/<%= product.imageurl %>" class="card-img-top" alt="<%= product.title %>">
+            <h2 class="card-title"><%= product.title %></h2>
+            <h3 class="card-text">Rs.<%= product.price %></h3>
+            <p class="card-text"><%= product.description %></p>
+            <!-- <form action="/admin/delete-product" method="POST"> -->
+              <a href="/admin/edit-product/<%=product._id%>?editing=true" class="btn btn-outline-secondary">Edit</a>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" value="<%= product._id %>" name="productId">
+              <button class="btn btn-danger"  type="button" onclick="deleteProduct(this)">Delete</button>
+            <!-- </form> -->
+           </div>
+        </div>
+        <%}%>
+    <%} else {%>
+    <h1>All products</h1>
+    <%}%>
+  </main>
+ 
+
+       
+        <%- include('../includes/end.ejs') %>
+        <script>
+
+           const deleteProduct = (btn) =>{
+              const proId=btn.parentNode.querySelector('[name=productId]').value;
+              const csrf=btn.parentNode.querySelector('[name=_csrf]').value;
+              const productElement = btn.closest('div'); 
+              
+              fetch('/admin/products/'+proId,{
+                method:"DELETE",
+                headers:{
+                  'csrf-token':csrf
+                }
+              })
+              .then((result) => {
+                return result.json(); 
+              })
+              .then((data) => {
+                console.log(data);
+                productElement.parentNode.removeChild(productElement);
+              })
+              .catch((err) => {
+                  console.log(err);
+              });
+          }
+
+        </script>

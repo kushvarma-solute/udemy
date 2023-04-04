@@ -1,0 +1,87 @@
+<%- include('../includes/head.ejs') %>
+ <div>
+    <%- include('../includes/nav.ejs') %>
+  </div>
+
+      <main class="container mt-5">
+        <div class="container" style="margin-top: 200px;">
+       
+        <div class="d-flex justify-content-center border:"> 
+          <form action="/admin/<% if(editing) {%>edit-product<% } else {%>Add-product<% }%>" method="POST" enctype="multipart/form-data" novalidate>
+            <% if(errorMessage) {%>
+              <div class="toast-body">
+                <%= errorMessage  %>
+              </div>
+              <%}%>
+            
+            <div class="form-group row">
+              <label for="name" class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text"
+                class="form-control <%= validationErrors.find(e => e.param === 'title') ? 'is-invalid' : ' '%>"   
+                 required id="name" 
+                 name="title" 
+                 value="<% if (editing || hasError) { %> <%=product.title%> <% } %>">
+              </div>
+            </div>
+
+            <!-- <div class="form-group row">
+              <label for="image" class="col-sm-2 col-form-label">image</label>
+              <div class="col-sm-10">
+                <input type="text" 
+                class="form-control <%= validationErrors.find(e => e.param === 'imageurl') ? 'is-invalid' : ' '%>" 
+ 
+                required id="imageurl" 
+                name="imageurl" 
+                value="<% if (editing || hasError) { %> <%= product.imageurl %> <% } %>">
+              </div>
+            </div> -->
+            <div class="form-group row">
+              <label for="image" class="col-sm-2 col-form-label">image</label>
+              <div class="col-sm-10">
+                <input 
+                 type="file" 
+                 id="image" 
+                 name="image" 
+                >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="price" class="col-sm-2 col-form-label" >price</label>
+              <div class="col-sm-15">
+                <input type="number" 
+                class="form-control <%= validationErrors.find(e => e.param === 'price') ? 'is-invalid' : ' '%>" 
+                required id="price" 
+                name="price" 
+                value="<% if (editing || hasError) { %><%=product.price%><% } %>">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="desc" class="col-sm-3 col-form-label" >Description</label>
+              <div class="col-sm-10">
+
+                <textarea 
+                class="form-control <%= validationErrors.find(e => e.param === 'description') ? 'is-invalid' : ' '%>" 
+                required id="description" placeholder="Required product desciption" name="description"><% if (editing || hasError) { %> <%= product.description %> <% } %></textarea>
+              </div>
+              </div>
+
+                <% if (editing) {%>
+                    <input type="hidden" value="<%=product._id%>" name="productId">
+                <% } %>
+
+                
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="btn btn-primary mb-2"><% if(editing) {%>Update product<% } else {%>Add Product<% }%></button>
+          </form>
+          <!-- <form action="/admin/Add-product" method="POST">
+            <input type="text" name="title">
+            <button type="submit">Add product</button>
+        </form> -->
+      </div>
+
+    </div>
+      </main>
+
+      <%- include('../includes/end.ejs') %>

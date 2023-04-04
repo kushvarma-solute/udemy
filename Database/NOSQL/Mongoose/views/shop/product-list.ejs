@@ -1,0 +1,31 @@
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/nav.ejs') %>
+<!-- this page is load when we click on the product -->
+  <main class="d-flex flex-column align-items-center">
+    <% if(prods.length > 0) {%>
+        <% for (let product of prods) {%>
+
+        <div class="card" style="width: 18rem; margin-top: 100px;">
+          <img src="/<%= product.imageurl %>" class="card-img-top" alt="<%= product.title %>">
+        
+          <div class="card-body">
+            <h2 class="card-title"><%= product.title %></h2>
+            <h3 class="card-text">Rs.<%= product.price %></h3>
+            <p class="card-text"><%= product.description %></p>
+            <form action="/cart" method="POST">
+             <a href="/products/<%= product._id %>" class="btn btn-outline-secondary">Details</a>
+             <% if(isAuthenticated) {%>
+             <%- include('../includes/add-to-cart.ejs',{product : product}) %> 
+              <%}%>
+            </form>
+          </div>
+        </div>
+        <%}%>
+        <%- include('../includes/pagination.ejs',{currentPage:currentPage,nextPage:nextPage,previousPage:previousPage,lastPage:lastPage,hasNextPage:hasNextPage,hasPreviousPage:hasPreviousPage}) %>
+
+    <%} else {%>
+      <h1 class="my-5">No products found!</h1>
+      <%}%>
+  </main>
+
+<%- include('../includes/end.ejs') %>

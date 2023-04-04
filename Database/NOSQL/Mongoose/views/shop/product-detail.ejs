@@ -1,0 +1,23 @@
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/nav.ejs') %>
+
+
+  <main>
+         <!-- This page is load when we click on the shop in nav bar -->
+
+        <div class="card" style="width: 18rem;">
+          <img src="/<%= product.imageurl %>" class="card-img-top" alt="<%= product.title %>">
+        
+          <div class="card-body">
+            <h2 class="card-title"><%= product.title %></h2>
+            <h3 class="card-text">Rs.<%= product.price %></h3>
+            <p class="card-text"><%= product.description %></p>
+            <% if(isAuthenticated) {%>
+              <%- include('../includes/add-to-cart.ejs',{product : product}) %> 
+               <%}%>            <!-- as we are calling include in for loop so that we have to use another argument "product : product " so we can access the add to cart button -->
+
+          </div>
+        </div>
+  </main>
+
+<%- include('../includes/end.ejs') %>

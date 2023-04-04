@@ -1,0 +1,53 @@
+<%- include('../includes/head.ejs') %>
+ 
+    <%- include('../includes/nav.ejs') %>
+`     
+
+      <main>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form action="/signup" method="POST" novalidate>
+                        <% if(errorMessage) {%>
+                            <div class="toast-body">
+                              <%= errorMessage  %>
+                            </div>
+                            <%}%>
+                        <div class="form-group">
+                            <label for="email">Email address:</label>
+                            <input type="email" 
+                                    class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'is-invalid' : ' '%>" 
+                                    id="email" 
+                                    name="email" 
+                                    placeholder="Enter your email" 
+                                    value="<%= oldInput.email %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password"
+                            class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'is-invalid' : ' '%>"  
+                             id="password" 
+                             name="password" 
+                             placeholder="Enter your password" 
+                             value="<%= oldInput.password %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">confirmPassword:</label>
+                            <input type="password" 
+                            class="form-control <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'is-invalid' : ' '%>"  
+                            id="confirmPassword" 
+                            name="confirmPassword"
+                             placeholder="re-Enter your password"
+                              value="<%= oldInput.confirmPassword %>">
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" class="btn btn-primary">Signup</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+     
+      </main>
+
+      <%- include('../includes/end.ejs') %>

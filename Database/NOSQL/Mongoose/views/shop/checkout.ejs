@@ -1,0 +1,35 @@
+<%- include('../includes/head.ejs') %>
+    <%- include('../includes/nav.ejs') %>
+    <main style="margin-top: 50px;">
+        <ul>
+            <% products.forEach(p => { %>
+                <li><h1>Product name: <%= p.productId.title %></h1></li>
+                <li><h2>Quantity: <%= p.quantity %></h2></li>
+                <!-- <form action="/cart-delete-item" method="POST">
+                    <input name="productId" type="hidden" value="<%= p.productId._id %>">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                 </form> -->
+            <% }); %>
+        </ul>
+        <div>
+           <h2> Total:<%= totalSum %></h2>
+        </div>
+        <div>
+            <button class="btn btn-outline-success" id="order-btn">ORDER</button>
+            <script src="https://js.stripe.com/v3/"></script>
+            <script>
+                //const PK="pk_test_51MeGSOSHbY27M8bw1HhqoRTiEe8cguC7prhZJlOzRZhrxmEodz5O1XWqsnUYkFXiP7N6L8v543KAQL5o4UMkBhOd00h6RRoFwE";
+                const PK="pk_test_51Ms3eCSE6BjtL9A6AWfjmnxgj3P5kGRD65lkNi6vkOPo0EUTgpLwb6J1W3sviLClwyJdp7TuIE9uLoBTQK7GYml200IWGjYpIu";
+                var stripe = Stripe(PK);
+                var orderBtn = document.getElementById('order-btn');
+                orderBtn.addEventListener('click',function(){
+                    console.log("buttton clicked");
+                    stripe.redirectToCheckout({
+                        
+                        sessionId:'<%= sessionId %>'  
+                    });
+                });
+            </script>
+        </div>
+    </main>
+    <%- include('../includes/end.ejs') %>

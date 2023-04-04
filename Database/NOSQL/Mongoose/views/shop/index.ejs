@@ -1,0 +1,28 @@
+
+
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/nav.ejs') %>
+
+<main class="d-flex flex-column align-items-center" style=" margin-top: 100px;">
+  <% if (prods.length > 0) { %>
+    <div class="d-flex flex-column align-items-center">
+      <% for (let product of prods) { %>
+        <div class="card my-3" style="width: 18rem;">
+          <img src="/<%= product.imageurl %>" class="card-img-top" alt="<%= product.title %>">
+          <div class="card-body">
+            <h2 class="card-title"><%= product.title %></h2>
+            <h3 class="card-text">Rs.<%= product.price %></h3>
+            <p class="card-text"><%= product.description %></p>
+            <% if (isAuthenticated) { %>
+              <%- include('../includes/add-to-cart.ejs', { product: product }) %> 
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    <%- include('../includes/pagination.ejs',{currentPage:currentPage,nextPage:nextPage,previousPage:previousPage,lastPage:lastPage,hasNextPage:hasNextPage,hasPreviousPage:hasPreviousPage}) %>
+  <% } else { %>
+    <h1 class="my-5">No products found!</h1>
+  <% } %>
+</main>
+<%- include('../includes/end.ejs') %>
